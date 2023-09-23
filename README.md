@@ -1,7 +1,7 @@
 
 ***
 
-# Welcome to The library managment system's repository!
+# Welcome to The employee management system's repository!
 
 ***
 
@@ -22,7 +22,7 @@
 
 ## Our privacy policy: 
 
-### This section tells people about which versions of our project are currently being supported with security updates that would be updated alongside our terms and conditions, the chart below is a representation of what versions of our products are supported by our security policy.
+### This section tells people about which versions of our project are currently being supported with security updates that would be updated alongside our terms and conditions, the chart below is a representation of what versions of our products are backed by our security policy.
 
 ***
 
@@ -32,7 +32,7 @@
 
 ***
  
-![](https://4kwallpapers.com/images/walls/thumbs_2t/11968.jpg)
+![](https://e0.pxfuel.com/wallpapers/823/898/desktop-wallpaper-abstract-background-patterns-thumbnail.jpg)
 
 ### Arios Amigos!
 ### Powering off...
