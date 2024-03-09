@@ -1,7 +1,7 @@
 
 ***
 
-# Welcome to The employee management system's repository!
+# Welcome to The Employee Management system's repository!
 
 ***
 
