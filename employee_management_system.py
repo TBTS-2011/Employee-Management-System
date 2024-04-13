@@ -1,319 +1,296 @@
 
-# Employee Management System Using Python – copyassignment.com
-from os import system
 import re
-# importing mysql connector
+from os import system
 import mysql.connector
+# Note: This project requires MySQL to run, therefore it is recommended to install MySQL and then attempt to run or Debug the file.
 
-# making Connection
 con = mysql.connector.connect(
-    host="localhost", user="username", password="yourpassword")
+    host="LocalHost", user="TBTS-emp-001", password="TBTS-emp-pwd-4761"
+    )
+# The username and passwords in this code are fake, and actual employee usernames and passwords will be given differently, and are not the same.
 
-# preparing a cursor object
-cursorObject = con.cursor()
- 
-# creating database
-cursorObject.execute("CREATE DATABASE employee")
+cursor_object = con.cursor()
+cursor_object.execute("Create new database for Employee")
 
-# make a regular expression
-# for validating an Email
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-# for validating an Phone Number
-Pattern = re.compile("(0|91)?[7-9][0-9]{9}")
+Pattern = re.compile("(0|91)?[7-9][0-9]{9}") # This code is for validating a Phone Number.
 
 
-# Function to Add_Employ
-def Add_Employ():
-    print("{:>60}".format("-->>Add Employee Record<<--"))
+def Add_Employee(): # Functions to Add_Employee.
+
+    print("{:>60}".format("Add new Employee Record"))
+
     Id = input("Enter Employee Id: ")
-    # checking If Employee Id is Exit Or Not
-    if (check_employee(Id) == True):
-        print("Employee ID Already Exists\nTry Again..")
-        press = input("Press Any Key To Continue..")
-        Add_Employ()
+    if (check_employee(Id) is True):
+        print("This Employee ID Already Exists!\nPlease try again.")
+        press = input("Press any key to Continue.")
+        Add_Employee()
+
     Name = input("Enter Employee Name: ")
-    # checking If Employee Name is Exit Or Not
-    if (check_employee_name(Name) == True):
-        print("Employee Name Already Exists\nTry Again..")
-        press = input("Press Any Key To Continue..")
-        Add_Employ
-    Email_Id = input("Enter Employee Email ID: ")
-    if(re.fullmatch(regex, Email_Id)):
-        print("Valid Email")
+    if (check_employee_name(Name) is True):
+        print("Employee Name Already Exists!\nPlease try again.")
+        press = input("Press any key to Continue.")
+        Add_Employee()
+
+    email_Id = input("Enter Employee Email ID: ")
+    if(re.fullmatch(regex, email_Id)):
+        print("Valid Email.")
     else:
-        print("Invalid Email")
-        press = input("Press Any Key To Continue..")
-        Add_Employ()
-    Phone_no = input("Enter Employee Phone No.: ")
-    if(Pattern.match(Phone_no)):
-        print("Valid Phone Number")
+        print("Invalid Email!\nPlease try again.")
+        press = input("Press any key to Continue.")
+        Add_Employee()
+
+    phone_No = input("Enter Employee Phone Number: ")
+    if(Pattern.match(phone_No)):
+        print("Valid Phone Number.")
     else:
-        print("Invalid Phone Number")
-        press = input("Press Any Key To Continue..")
-        Add_Employ()
+        print("Invalid Phone Number!\nPlease try again.")
+        press = input("Press Any Key To Continue.")
+        Add_Employee()
+
     Address = input("Enter Employee Address: ")
-    Post = input("Enter Employee Post: ")
-    Salary = input("Enter Employee Salary: ")
-    data = (Id, Name, Email_Id, Phone_no, Address, Post, Salary)
-    # Instering Employee Details in
-    # the Employee (empdata) Table
+    if(re.fullmatch(regex, Address)):
+        print("Valid Address.")
+    else:
+        print("Invalid Address!\nPlease try again.")
+        press = input("Press any key to Continue.")
+        Add_Employee()
+
+    Salary = input("Enter Employee Salary: ") # The salary for an employee may differ from one employee to another, so the values present in this code are not to be taken as actual values.
+    if(re.fullmatch(regex, Salary)):
+        print("Valid Salary.")
+    else:
+        print("Invalid Salary details!\nPlease try again.")
+        press = input("Press any key to Continue.")
+        Add_Employee()
+
+    data = (Id, Name, email_Id, phone_No, Address, Salary)
+
     sql = 'insert into empdata values(%s,%s,%s,%s,%s,%s,%s)'
     c = con.cursor()
-
-    # Executing the sql Query
     c.execute(sql, data)
 
-    # Commit() method to make changes in the table
     con.commit()
-    print("Successfully Added Employee Record")
-    press = input("Press Any Key To Continue..")
+    print("Successfully Added Employee Record!")
+    press = input("Press Any Key To Continue.")
     menu()
 
-# Function To Check if Employee With
-# given Name Exist or not
 def check_employee_name(employee_name):
-    # query to select all Rows from
-    # employee(empdata) table
+
     sql = 'select * from empdata where Name=%s'
 
-    # making cursor buffered to make
-    # rowcount method work properly
     c = con.cursor(buffered=True)
     data = (employee_name,)
-
-    # Execute the sql query
     c.execute(sql, data)
 
-    # rowcount method to find number
-    # of rowa with given values
     r = c.rowcount
     if r == 1:
         return True
     else:
         return False
 
+def check_(employee_id):
 
-# Function To Check if Employee With
-# given Id Exist or not
-def check_employee(employee_id):
-    # query to select all Rows from
-    # employee(empdata) table
     sql = 'select * from empdata where Id=%s'
-
-    # making cursor buffered to make
-    # rowcount method work properly
     c = con.cursor(buffered=True)
     data = (employee_id,)
-
-    # Execute the sql query
     c.execute(sql, data)
 
-    # rowcount method to find number
-    # of rowa with given values
     r = c.rowcount
     if r == 1:
         return True
     else:
         return False
 
-# Function to Display_Employ
-def Display_Employ():
-    print("{:>60}".format("-->> Display Employee Record <<--"))
-    # query to select all rows from Employee (empdata) Table
+def Display_Employee(): # Function to Display_Employee.
+
+    print("{:>60}".format("Display Employee Records"))
+
     sql = 'select * from empdata'
     c = con.cursor()
-
-    # Executing the sql query
     c.execute(sql)
 
-    # Fetching all details of all the Employees
+    # Fetching all details of the Employee.
     r = c.fetchall()
     for i in r:
-        print("Employee Id: ", i[0])
-        print("Employee Name: ", i[1])
-        print("Employee Email Id: ", i[2])
-        print("Employee Phone No.: ", i[3])
-        print("Employee Address: ", i[4])
-        print("Employee Post: ", i[5])
-        print("Employee Salary: ", i[6])
+        print("Employee Id: \n", i[0])
+        print("Employee Name: \n", i[1])
+        print("Employee Email Id: \n", i[2])
+        print("Employee Phone Number: \n", i[3])
+        print("Employee Address: \n", i[4])
+        print("Employee Post: \n", i[5])
+        print("Employee Salary: \n", i[6])
         print("\n")
-    press = input("Press Any key To Continue..")
+    press = input("Press Any key To Continue.")
     menu()
 
-# Function to Update_Employ
-def Update_Employ():
-    print("{:>60}".format("-->> Update Employee Record <<--\n"))
+def Update_Employee(): # Function to Update_Employee.
+
+    print("{:>60}".format("Update Employee Record\n"))
+
     Id = input("Enter Employee Id: ")
-    # checking If Employee Id is Exit Or Not
-    if(check_employee(Id) == False):
-        print("Employee Record Not exists\nTry Again")
-        press = input("Press Any Key To Continue..")
+    if(check_employee(Id) is False):
+        print("Employee Record doesn't exist!\nPlease try again.")
+        press = input("Press Any Key To Continue.")
         menu()
     else:
-        Email_Id = input("Enter Employee Email ID: ")
-        if(re.fullmatch(regex, Email_Id)):
-            print("Valid Email")
-        else:
-            print("Invalid Email")
-            press = input("Press Any Key To Continue..")
-            Update_Employ()
-        Phone_no = input("Enter Employee Phone No.: ")
-        if(Pattern.match(Phone_no)):
-            print("Valid Phone Number")
-        else:
-            print("Invalid Phone Number")
-            press = input("Press Any Key To Continue..")
-            Update_Employ()
-        Address = input("Enter Employee Address: ")
-        # Updating Employee details in empdata Table
-        sql = 'UPDATE empdata set Email_Id = %s, Phone_no = %s, Address = %s where Id = %s'
-        data = (Email_Id, Phone_no, Address, Id)
-        c = con.cursor()
+        email_Id = input("Enter Employee Email ID: ")
 
-        # Executing the sql query
-        c.execute(sql, data)
+    if(re.fullmatch(regex, email_Id)):
+            print("Valid Email.")
+    else:
+            print("Invalid Email!\nPlease try again.")
+            press = input("Press Any Key To Continue.")
+            Update_Employee()
 
-        # commit() method to make changes in the table
-        con.commit()
-        print("Updated Employee Record")
-        press = input("Press Any Key To Continue..")
-        menu()
+    if(Pattern.match(Phone_no)):
+            Phone_no = input("Enter Employee Phone Number: ")
+            print("Valid Phone Number.")
+    else:
+            print("Invalid Phone Number!\nPlease try again.")
+            press = input("Press Any Key To Continue.")
+            Update_Employee()
 
-# Function to Promote_Employ
-def Promote_Employ():
-    print("{:>60}".format("-->> Promote Employee Record <<--\n"))
+    if (Pattern.match(Phone_no)):
+            Address = input("Enter Employee Address: ")
+            print("Valid Address.")
+    else:
+            print("Invalid Address!\nPlease try again.")
+            press = input("Press Any Key To Continue.")
+            Update_Employee()
+
+sql = 'UPDATE empdata set Email_Id = %s, Phone_no = %s, Address = %s where Id = %s'
+data = (email_Id, phone_No, Address, Id)
+c = con.cursor()
+c.execute(sql, data)
+
+con.commit()
+print("Updated Employee Record")
+press = input("Press Any Key To Continue..")
+menu()
+
+def Promote_Employee(): # Function to Promote_Employ.
+
+    print("{:>60}".format("Promote Employee\n"))
+
     Id = input("Enter Employee Id: ")
-    # checking If Employee Id is Exit Or Not
-    if(check_employee(Id) == False):
-        print("Employee Record Not exists\nTry Again")
-        press = input("Press Any Key To Continue..")
+    if(check_employee(Id) is False):
+        print("Employee Record doesn't exist!\nPlease try again.")
+        press = input("Press Any Key To Continue.")
         menu()
     else:
-        Amount  = int(input("Enter Increase Salary: "))
-        #query to fetch salary of Employee with given data
+        Amount  = int(input("Enter Salary high: "))
+
         sql = 'select Salary from empdata where Id=%s'
         data = (Id,)
         c = con.cursor()
-        
-        #executing the sql query
         c.execute(sql, data)
-        
-        #fetching salary of Employee with given Id
+
         r = c.fetchone()
         t = r[0]+Amount
-        
-        #query to update salary of Employee with given id
+
         sql = 'update empdata set Salary = %s where Id = %s'
         d = (t, Id)
-
-        #executing the sql query
         c.execute(sql, d)
 
-        #commit() method to make changes in the table 
         con.commit()
-        print("Employee Promoted")
-        press = input("Press Any key To Continue..")
+        print("Employee is Promoted!")
+        press = input("Press Any key To Continue.")
         menu()
 
-# Function to Remove_Employ
-def Remove_Employ():
-    print("{:>60}".format("-->> Remove Employee Record <<--\n"))
+def Remove_Employee(): # Function to Remove_Employee.
+
+    print("{:>60}".format("Remove Employee Record\n"))
+
     Id = input("Enter Employee Id: ")
-    # checking If Employee Id is Exit Or Not
-    if(check_employee(Id) == False):
-        print("Employee Record Not exists\nTry Again")
-        press = input("Press Any Key To Continue..")
+    if(check_employee(Id) is False):
+        print("Employee Record doesn't exist!\nPlease try again.")
+        press = input("Press Any Key To Continue.")
         menu()
     else:
-        #query to delete Employee from empdata table
         sql = 'delete from empdata where Id = %s'
         data = (Id,)
         c = con.cursor()
-
-        #executing the sql query
         c.execute(sql, data)
 
-        #commit() method to make changes in the empdata table
         con.commit()
-        print("Employee Removed")
-        press = input("Press Any key To Continue..")
+        print("Employee is Removed!")
+        press = input("Press Any key To Continue.")
         menu()
-        
-# Function to Search_Employ
-def Search_Employ():
-    print("{:>60}".format("-->> Search Employee Record <<--\n"))
+
+def Search_Employee(): # Function to Search_Employee.
+
+    print("{:>60}".format("Search Employee Record\n"))
+
     Id = input("Enter Employee Id: ")
-    # checking If Employee Id is Exit Or Not
-    if(check_employee(Id) == False):
-        print("Employee Record Not exists\nTry Again")
-        press = input("Press Any Key To Continue..")
+    if(check_employee(Id) is False):
+        print("Employee Record doesn't exist!!\nPlease try again.")
+        press = input("Press Any Key To Continue.")
         menu()
     else:
-        #query to search Employee from empdata table
         sql = 'select * from empdata where Id = %s'
         data = (Id,)
         c = con.cursor()
-        
-        #executing the sql query
         c.execute(sql, data)
 
-        #fetching all details of all the employee
+        #Fetching all details of the employee.
         r = c.fetchall()
         for i in r:
-            print("Employee Id: ", i[0])
-            print("Employee Name: ", i[1])
-            print("Employee Email Id: ", i[2])
-            print("Employee Phone No.: ", i[3])
-            print("Employee Address: ", i[4])
-            print("Employee Post: ", i[5])
-            print("Employee Salary: ", i[6])
-            print("\n")
-        press = input("Press Any key To Continue..")
+            print("Employee Id: \n", i[0])
+            print("Employee Name: \n", i[1])
+            print("Employee Email Id: \n", i[2])
+            print("Employee Phone Number: \n", i[3])
+            print("Employee Address: \n", i[4])
+            print("Employee Post: \n", i[5])
+            print("Employee Salary: \n", i[6])
+
+        press = input("Press Any key To Continue.")
         menu()
 
-# Menu function to display menu
 def menu():
+
     system("cls")
-    print("{:>60}".format("************************************"))
-    print("{:>60}".format("-->> Employee Management System <<--"))
-    print("{:>60}".format("************************************"))
-    print("1. Add Employee")
-    print("2. Display Employee Record")
-    print("3. Update Employee Record")
-    print("4. Promote Employee Record")
-    print("5. Remove Employee Record")
-    print("6. Search Employee Record")
+
+    print("{:>60}".format("EMPLOYEE MANAGEMENT SYSTEM\n"))
+    print("{:>30}".format("version-0.2.0\n"))
+
+    print("1. Add Employee\n")
+    print("2. Display Employee Record\n")
+    print("3. Update Employee Record\n")
+    print("4. Promote Employee Record\n")
+    print("5. Remove Employee Record\n")
+    print("6. Search Employee Record\n")
     print("7. Exit\n")
-    print("{:>60}".format("-->> Choice Options: [1/2/3/4/5/6/7] <<--"))
+
+    print("{:>60}".format("Array: (1/2/3/4/5/6/7)"))
 
     ch = int(input("Enter your Choice: "))
     if ch == 1:
         system("cls")
-        Add_Employ()
+        Add_Employee()
     elif ch == 2:
         system("cls")
-        Display_Employ()
+        Display_Employee()
     elif ch == 3:
         system("cls")
-        Update_Employ()
+        Update_Employee()
     elif ch == 4:
         system("cls")
-        Promote_Employ()
+        Promote_Employee()
     elif ch == 5:
         system("cls")
-        Remove_Employ()
+        Remove_Employee()
     elif ch == 6:
         system("cls")
-        Search_Employ()
+        Search_Employee()
     elif ch == 7:
         system("cls")
-        print("{:>60}7".format("Have A NIce Day :)"))
+
+        print("{:>60}7".format("Have a wonderful day!!)"))
         exit(0)
     else:
-        print("Invalid Choice!")
-        press = input("Press Any key To Continue..")
+        print("Invalid Choice!\nPlease try again.")
+        press = input("Press Any key To Continue.")
         menu()
 
-
-# Calling menu function
 menu()
