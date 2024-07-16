@@ -7,7 +7,6 @@ import mysql.connector
 con = mysql.connector.connect(
     host="LocalHost", user="TBTS-emp-001", password="TBTS-emp-pwd-4761"
     )
-# The username and passwords in this code are fake, and actual employee usernames and passwords will be given differently, and are not the same.
 
 cursor_object = con.cursor()
 cursor_object.execute("Create new database for Employee")
@@ -16,7 +15,7 @@ regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 Pattern = re.compile("(0|91)?[7-9][0-9]{9}") # This code is for validating a Phone Number.
 
 
-def Add_Employee(): # Functions to Add_Employee.
+def Add_Employee():
 
     print("{:>60}".format("Add new Employee Record"))
 
@@ -56,7 +55,7 @@ def Add_Employee(): # Functions to Add_Employee.
         press = input("Press any key to Continue.")
         Add_Employee()
 
-    Salary = input("Enter Employee Salary: ") # The salary for an employee may differ from one employee to another, so the values present in this code are not to be taken as actual values.
+    Salary = input("Enter Employee Salary: ")
     if(re.fullmatch(regex, Salary)):
         print("Valid Salary.")
     else:
@@ -102,7 +101,7 @@ def check_(employee_id):
     else:
         return False
 
-def Display_Employee(): # Function to Display_Employee.
+def Display_Employee():
 
     print("{:>60}".format("Display Employee Records"))
 
@@ -110,7 +109,6 @@ def Display_Employee(): # Function to Display_Employee.
     c = con.cursor()
     c.execute(sql)
 
-    # Fetching all details of the Employee.
     r = c.fetchall()
     for i in r:
         print("Employee Id: \n", i[0])
@@ -124,7 +122,7 @@ def Display_Employee(): # Function to Display_Employee.
     press = input("Press Any key To Continue.")
     menu()
 
-def Update_Employee(): # Function to Update_Employee.
+def Update_Employee():
 
     print("{:>60}".format("Update Employee Record\n"))
 
@@ -198,7 +196,7 @@ def Promote_Employee(): # Function to Promote_Employ.
         press = input("Press Any key To Continue.")
         menu()
 
-def Remove_Employee(): # Function to Remove_Employee.
+def Remove_Employee():
 
     print("{:>60}".format("Remove Employee Record\n"))
 
@@ -218,7 +216,7 @@ def Remove_Employee(): # Function to Remove_Employee.
         press = input("Press Any key To Continue.")
         menu()
 
-def Search_Employee(): # Function to Search_Employee.
+def Search_Employee():
 
     print("{:>60}".format("Search Employee Record\n"))
 
