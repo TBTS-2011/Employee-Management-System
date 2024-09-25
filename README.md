@@ -16,16 +16,6 @@ The Employee Management System is a command-line application developed using the
 - Requires *from os import system* modules.
 - Requires *import re* modules.
 
-### File Structure:
-
-```
-employee-management-system/
-├── employee_management.py    # Main application script
-├── [data folder]
-│   └── employee_data.csv     # Example data file 
-├── [tests/, README.md]
-```
-
 ### Contributing:
 
 Contributions are welcome! Feel free to open an issue or submit a pull request.
