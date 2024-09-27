@@ -8,7 +8,7 @@ The Employee Management System is a command-line application developed using the
 - **View Employee Records:** Display a list of all employees or search for specific employees.
 - **Update Employee Information:** Modify existing employee details such as department or salary.
 - **Delete Employee Records:** Remove employees from the system.
-- **Data Persistence:** Employee data is stored [mention data storage method e.g., in a CSV file, SQLite database] for future access. 
+- **Data Persistence:** Employee data is stored for future access. 
 
 ## Prerequisites:
 
